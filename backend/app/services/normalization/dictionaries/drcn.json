@@ -1,0 +1,40 @@
+{
+  "atas": ["atas", "sebelah atas", "bagian atas", "di atas"],
+  "bawah": ["bawah", "sebelah bawah", "bagian bawah", "di bawah"],
+  "kiri": ["kiri", "sebelah kiri", "samping kiri", "bagian kiri", "di kiri"],
+  "kanan": [
+    "kanan",
+    "sebelah kanan",
+    "samping kanan",
+    "bagian kanan",
+    "di kanan"
+  ],
+  "unilateral": [
+    "unilateral",
+    "satu sisi",
+    "sebelah",
+    "samping",
+    "di satu sisi"
+  ],
+  "bilateral": ["bilateral", "dua sisi", "di kedua sisi", "kedua sisi"],
+  "depan": [
+    "depan",
+    "ujung",
+    "ujung depan",
+    "bagian depan",
+    "di depan",
+    "sisi depan",
+    "di bagian depan"
+  ],
+  "belakang": [
+    "belakang",
+    "bagian belakang",
+    "di belakang",
+    "sisi belakang",
+    "di bagian belakang"
+  ],
+  "tengah": ["tengah", "tengah tengah", "center", "central", "medial"],
+  "dalam": ["dalam", "bagian dalam", "internal"],
+  "luar": ["luar", "bagian luar", "external"],
+  "menyebar": ["menyebar", "seluruh", "difus", "merata"]
+}

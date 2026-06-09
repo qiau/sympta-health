@@ -1,0 +1,50 @@
+# =====================================
+# FRONTEND
+# =====================================
+
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+frontend/.env
+frontend/.env.*
+
+# Frontend logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# =====================================
+# BACKEND
+# =====================================
+
+# Python cache
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+backend/.venv/
+backend/venv/
+backend/env/
+
+# Environment
+backend/.env
+backend/.env.*
+
+# Test cache
+backend/.pytest_cache/
+backend/.cache/
+backend/.mypy_cache/
+
+# Runtime storage
+backend/storage/*
+
+# =====================================
+# MACHINE LEARNING
+# =====================================
+machine-learning/ner_models/*

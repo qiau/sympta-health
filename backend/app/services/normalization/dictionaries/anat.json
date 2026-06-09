@@ -1,0 +1,97 @@
+{
+  "integumentary_system": [
+    "kulit",
+    "wajah",
+    "muka",
+    "bibir",
+    "kuku",
+    "kelopak mata",
+    "rambut",
+    "alis"
+  ],
+
+  "respiratory_system": [
+    "dada",
+    "paru-paru",
+    "paru",
+    "saluran pernapasan",
+    "hidung",
+    "sinus",
+    "tonsil",
+    "tenggorokan",
+    "faring",
+    "laring",
+    "trakea",
+    "bronkus",
+    "alveoli"
+  ],
+
+  "digestive_system": [
+    "mulut",
+    "lidah",
+    "gigi",
+    "gusi",
+    "kerongkongan",
+    "perut",
+    "usus",
+    "usus halus",
+    "usus besar",
+    "rektum",
+    "anus",
+    "hati",
+    "saluran pencernaan",
+    "feses",
+    "pup",
+    "buang air besar"
+  ],
+
+  "urinary_system": [
+    "ginjal",
+    "ureter",
+    "kandung kemih",
+    "uretra",
+    "saluran kemih",
+    "saluran kencing",
+    "kantung kemih"
+  ],
+
+  "reproductive_system": [
+    "vagina",
+    "miss v",
+    "area kewanitaan",
+    "organ intim wanita",
+    "serviks",
+    "rahim",
+    "uterus",
+    "penis",
+    "mr p"
+  ],
+
+  "nervous_system": ["kepala", "pelipis", "kening", "dahi", "otak", "meningen"],
+
+  "hematologic_system": ["darah", "sel darah merah", "sumsum tulang"],
+
+  "sensory_system": ["telinga", "mata"],
+
+  "lymphatic_system": ["kelenjar getah bening"],
+
+  "cardiovascular_system": ["jantung", "pembuluh darah jantung"],
+
+  "musculoskeletal_system": [
+    "tulang",
+    "tulang belakang",
+    "sendi",
+    "otot",
+    "tangan",
+    "kaki",
+    "lengan",
+    "punggung",
+    "pinggang",
+    "leher",
+    "paha",
+    "tungkai",
+    "selangkangan",
+    "telapak tangan",
+    "telapak kaki"
+  ]
+}

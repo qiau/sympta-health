@@ -1,0 +1,42 @@
+{
+  "jarang": [
+    "jarang",
+    "baru sekali",
+    "sekali",
+    "hanya sekali",
+    "pertama kali",
+    "1x sebulan",
+    "sebulan sekali",
+    "1x dalam sebulan"
+  ],
+
+  "kadang": [
+    "kadang",
+    "kadang-kadang",
+    "kadang2",
+    "terkadang",
+    "tidak selalu",
+    "2x seminggu",
+    "3x seminggu",
+    "beberapa kali seminggu",
+    "hilang timbul"
+  ],
+
+  "sering": [
+    "sering",
+    "terus",
+    "seharian",
+    "terus-menerus",
+    "beberapa kali",
+    "kerap",
+    "bolak-balik",
+    "kambuh terus",
+    "setiap hari",
+    "tiap hari",
+    "1x sehari",
+    "2x sehari",
+    "setiap pagi",
+    "setiap malam",
+    "hampir setiap hari"
+  ]
+}

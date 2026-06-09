@@ -1,0 +1,294 @@
+{
+  "demam": [
+    "demam",
+    "panas",
+    "badan panas",
+    "meriang",
+    "panas dingin",
+    "greges"
+  ],
+
+  "batuk": [
+    "batuk",
+    "berdahak",
+    "dahak",
+    "batuk-batuk",
+    "sering batuk",
+    "batuk terus",
+    "batuk kering",
+    "batuk berdahak"
+  ],
+
+  "batuk_darah": [
+    "batuk darah",
+    "batuk berdarah",
+    "dahak berdarah",
+    "dahak darah"
+  ],
+
+  "pilek": [
+    "pilek",
+    "hidung meler",
+    "hidung berair",
+    "ingus keluar",
+    "hidung berlendir",
+    "ingusan"
+  ],
+
+  "bersin": ["bersin", "bersin bersin", "bersin-bersin"],
+
+  "mual": ["mual", "enek", "rasa ingin muntah", "mau muntah"],
+
+  "muntah": ["muntah", "muntah-muntah", "keluar muntah", "muntah muntah"],
+
+  "mulas": ["mulas", "mules"],
+
+  "kembung": ["kembung", "perut kembung", "kenyang tidak nyaman"],
+
+  "bab_cair": [
+    "bab cair",
+    "bab",
+    "pup",
+    "buang air besar",
+    "buang air besar cair",
+    "buang air besar encer",
+    "bab encer",
+    "mencret",
+    "bab mencret",
+    "feses cair",
+    "fesesnya cair",
+    "pup cair",
+    "pup encer"
+  ],
+
+  "sembelit": [
+    "sembelit",
+    "susah bab",
+    "bab susah",
+    "susah buang air besar",
+    "buang air besar keras",
+    "buang air besar susah"
+  ],
+
+  "pingsan": [
+    "pingsan",
+    "sempat pingsan",
+    "jatuh tidak sadar",
+    "tidak sadarkan diri",
+    "kehilangan kesadaran",
+    "sempat tidak sadar",
+    "ambruk tiba-tiba"
+  ],
+
+  "gatal": ["gatal", "kulit gatal", "rasa gatal"],
+
+  "ruam": [
+    "ruam",
+    "bintik",
+    "benjol",
+    "bintil",
+    "ruam kulit",
+    "bintik merah",
+    "bintik-bintik merah",
+    "bintil merah",
+    "bercak merah"
+  ],
+
+  "pucat": ["pucat", "wajah pucat", "kelihatan pucat", "kulit terlihat pucat"],
+
+  "kedinginan": [
+    "dingin",
+    "terasa dingin",
+    "dingin seperti es",
+    "mudah kedinginan",
+    "menggigil"
+  ],
+
+  "sesak_napas": [
+    "sesak",
+    "sesak napas",
+    "mengi",
+    "napas terasa berat",
+    "nafas terasa berat",
+    "sulit bernapas",
+    "nafas pendek",
+    "napas berat",
+    "nafas berat",
+    "ngos-ngosan",
+    "ngos ngosan",
+    "ngos2an"
+  ],
+
+  "nyeri": [
+    "nyeri",
+    "sakit",
+    "rasa sakit",
+    "terasa nyeri",
+    "ngilu",
+    "perih",
+    "kram",
+    "keram",
+    "berdenyut"
+  ],
+
+  "lemas": [
+    "lemas",
+    "lemes",
+    "lelah",
+    "lesu",
+    "mudah lelah",
+    "pegal",
+    "pegel",
+    "cepat lelah",
+    "cepat capek",
+    "gampang capek",
+    "badan terasa lemah",
+    "tidak bertenaga"
+  ],
+
+  "nafsu_makan_turun": [
+    "tidak nafsu makan",
+    "nafsu makan menurun",
+    "nafsu makan turun",
+    "tidak selera makan",
+    "malas makan"
+  ],
+
+  "pusing": [
+    "pusing",
+    "sakit kepala",
+    "kepala pusing",
+    "kepala berat",
+    "kepala terasa ringan",
+    "badan terasa ringan",
+    "kepala melayang",
+    "mata berkunang-kunang",
+    "pandangan berkunang-kunang",
+    "pandangan gelap",
+    "berkunang-kunang",
+    "pusing kunang-kunang",
+    "pusing ringan",
+    "kliyengan"
+  ],
+
+  "mimisan": [
+    "mimisan",
+    "keluar darah dari hidung",
+    "darah dari hidung",
+    "hidung keluar darah"
+  ],
+
+  "pandangan_kabur": [
+    "pandangan kabur",
+    "mata kabur",
+    "mata buram",
+    "penglihatan kabur",
+    "penglihatan buram",
+    "pandangan berbayang"
+  ],
+
+  "jantung_berdebar": [
+    "berdebar",
+    "berdebar-debar",
+    "jantung berdebar",
+    "detak jantung cepat",
+    "jantung berdetak kencang",
+    "jantung terasa berdebar"
+  ],
+
+  "hidung_tersumbat": [
+    "hidung tersumbat",
+    "hidung mampet",
+    "hidung tersumbat parah",
+    "hidung tersumbat berat",
+    "hidung tersumbat sekali",
+    "hidung tersumbat banget"
+  ],
+
+  "keringat_dingin": [
+    "keringat dingin",
+    "keringat terasa dingin",
+    "keringat dingin sekali",
+    "keringat dingin banget"
+  ],
+
+  "penurunan_berat_badan": [
+    "penurunan berat badan",
+    "bb turun",
+    "berat badan turun",
+    "berat badan menurun",
+    "makin kurus"
+  ],
+
+  "pembengkakan": [
+    "pembengkakan",
+    "bengkak",
+    "benjolan",
+    "benjol",
+    "tonjolan",
+    "menonjol"
+  ],
+
+  "fotofobia": [
+    "fotofobia",
+    "sensitif cahaya",
+    "tidak tahan cahaya",
+    "silau",
+    "mata sensitif cahaya",
+    "sakit mata saat terkena cahaya",
+    "mata terasa sakit saat terkena cahaya"
+  ],
+
+  "disuria": [
+    "disuria",
+    "anyang-anyangan",
+    "anyangan",
+    "anyang",
+    "kencing sedikit-sedikit",
+    "pipis sedikit-sedikit",
+    "kencing tidak tuntas",
+    "pipis tidak tuntas",
+    "terasa tidak lampias",
+    "ingin pipis terus",
+    "sering ingin kencing",
+    "sering ingin pipis",
+    "sering buang air kecil",
+    "sering bak",
+    "buang air kecil terasa sakit",
+    "buang air kecil nyeri",
+    "buang air kecil perih",
+    "pipis terasa sakit",
+    "pipis nyeri",
+    "pipis perih",
+    "perih saat kencing",
+    "panas saat kencing",
+    "nyeri saat kencing",
+    "sakit saat kencing",
+    "terasa terbakar saat kencing",
+    "kencing terasa panas",
+    "kencing terasa perih",
+    "sakit waktu pipis",
+    "perih waktu buang air kecil",
+    "nyeri ketika bak",
+    "sakit saat bak"
+  ],
+
+  "urine_abnormal": [
+    "urine keruh",
+    "urin keruh",
+    "air kencing keruh",
+    "pipis keruh",
+    "warna urin keruh",
+    "urin berbau",
+    "urine berbau",
+    "air kencing bau",
+    "pipis bau",
+    "urin berwarna gelap",
+    "urin berubah warna",
+    "kencing berdarah",
+    "urin berdarah",
+    "pipis berdarah",
+    "ada darah di urin",
+    "air kencing berdarah"
+  ]
+}

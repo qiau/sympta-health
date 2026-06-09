@@ -1,0 +1,41 @@
+{
+  "akut": [
+    "sehari",
+    "kemarin",
+    "hari ini",
+    "seminggu",
+    "seminggu ini",
+    "semingguan",
+    "seminggu terakhir",
+    "beberapa hari",
+    "beberapa hari ini",
+    "beberapa hari terakhir",
+    "beberapa waktu terakhir",
+    "akhir-akhir ini",
+    "baru-baru ini",
+    "belakangan",
+    "belakangan ini",
+    "minggu lalu"
+  ],
+  "subakut": [
+    "8 hari",
+    "4 minggu",
+    "sebulan",
+    "sebulan ini",
+    "sebulan terakhir",
+    "sebulan lalu",
+    "sebulanan",
+    "beberapa minggu",
+    "beberapa minggu terakhir"
+  ],
+  "kronis": [
+    "sebulan lebih",
+    "2 bulan",
+    "setahun",
+    "setahun ini",
+    "setahunan",
+    "berkelanjutan",
+    "berkepanjangan",
+    "sudah lama"
+  ]
+}
