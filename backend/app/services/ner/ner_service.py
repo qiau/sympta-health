@@ -3,6 +3,9 @@ from flair.models import SequenceTagger
 from flair.data import Sentence
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 import re
+from pathlib import Path
+
+NER_DIR = Path(__file__).resolve().parents[4] / "machine-learning" / "ner_models"
 
 executor = ThreadPoolExecutor(max_workers=8)
 
@@ -22,28 +25,28 @@ def load_ner_models():
     global model_anat, model_proc, model_age, model_diso, model_chem, model_drtn, model_frkw, model_drcn
 
     print("Loading ANAT model...")
-    model_anat = SequenceTagger.load("./ner_models/anat/final-model.pt")
+    model_anat = SequenceTagger.load(NER_DIR / "anat" / "final-model.pt")
 
     print("Loading PROC model...")
-    model_proc = SequenceTagger.load("./ner_models/proc/final-model.pt")
+    model_proc = SequenceTagger.load(NER_DIR / "proc" / "final-model.pt")
 
     print("Loading AGE model...")
-    model_age = SequenceTagger.load("./ner_models/age/final-model.pt")
+    model_age = SequenceTagger.load(NER_DIR / "age" / "final-model.pt")
 
     print("Loading DISO model...")
-    model_diso = SequenceTagger.load("./ner_models/diso/final-model.pt")
+    model_diso = SequenceTagger.load(NER_DIR / "diso" / "final-model.pt")
     
     print("Loading CHEM model...")
-    model_chem = SequenceTagger.load("./ner_models/chem/final-model.pt")
+    model_chem = SequenceTagger.load(NER_DIR / "chem" / "final-model.pt")
 
     print("Loading DRTN model...")
-    model_drtn = SequenceTagger.load("./ner_models/drtn/final-model.pt")
+    model_drtn = SequenceTagger.load(NER_DIR / "drtn" / "final-model.pt")
 
     print("Loading FRKW model...")
-    model_frkw = SequenceTagger.load("./ner_models/frkw/final-model.pt")
+    model_frkw = SequenceTagger.load(NER_DIR / "frkw" / "final-model.pt")
 
     print("Loading DRCN model...")
-    model_drcn = SequenceTagger.load("./ner_models/drcn/final-model.pt")
+    model_drcn = SequenceTagger.load(NER_DIR / "drcn" / "final-model.pt")
 
     print("All NER models loaded successfully!")
 

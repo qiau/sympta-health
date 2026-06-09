@@ -1,4 +1,5 @@
 import joblib
+from pathlib import Path
 import numpy as np
 import pandas as pd
 from typing import Dict, Any, List, Tuple
@@ -13,7 +14,12 @@ def load_ml_model():
 
     print("Loading Logistic Regression model...")
 
-    bundle = joblib.load("ml_models/lr_model.pkl")
+    bundle = joblib.load(
+        Path(__file__).resolve().parents[4]
+        / "machine-learning"
+        / "ml_models"
+        / "lr_model.pkl"
+    )
 
     model = bundle["model"]
     mlb_encoder = bundle["mlb_encoder"]
