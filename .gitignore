@@ -43,8 +43,10 @@ backend/.mypy_cache/
 
 # Runtime storage
 backend/storage/*
+!backend/storage/.gitkeep
 
 # =====================================
 # MACHINE LEARNING
 # =====================================
 machine-learning/ner_models/*
+!machine-learning/ner_models/.gitkeep
