@@ -1,32 +1,54 @@
 from langchain_chroma import Chroma
 from app.services.rag.retrieval import get_retriever
 from app.services.rag.embedding import get_embeddings
-from app.services.rag.llm import get_llm
+from app.services.rag.llm import invoke_llm
 
+SYSTEM_PROMPT = """
+Kamu adalah asisten medis yang memberikan jawaban informatif dan mudah dipahami.
 
-def build_prompt(query: str, context: str) -> str:
-    return f"""
-    Kamu adalah asisten medis.
+Instruksi:
+- Ambil inti jawaban dari informasi yang tersedia.
+- Abaikan kata sapaan seperti "halo dok", "alodokter", atau kalimat tidak penting lainnya.
+- Jangan menuliskan label seperti "Pertanyaan:", "Jawaban:", atau "Pertanyaan Pasien:".
+- Gunakan bahasa formal, rapi, dan mudah dipahami seperti tulisan informatif.
+- Jangan mengarang informasi medis yang tidak terdapat pada referensi.
+- Utamakan informasi dari referensi yang diberikan.
 
-    Gunakan informasi berikut untuk menjawab pertanyaan pasien.
+ATURAN FORMAT:
+- DILARANG menggunakan bullet seperti "-", "*", atau markdown lainnya.
+- Jika membuat daftar, WAJIB menggunakan format nomor.
+- Gunakan format:
+  1.
+  2.
+  3.
 
-    Informasi:
+Contoh format yang benar:
+1. Istirahat yang cukup.
+2. Konsumsi makanan bergizi.
+3. Periksa ke dokter bila keluhan memburuk.
+
+Tulis jawaban dengan struktur yang jelas dan enak dibaca.
+""".strip()
+
+def build_messages(query: str, context: str):
+
+    human_prompt = f"""
+    Gunakan referensi berikut untuk membantu menjawab pertanyaan pasien.
+
+    Referensi hanya digunakan sebagai sumber informasi.
+    Jangan menyalin format referensi ke jawaban akhir.
+
+    === REFERENSI ===
     {context}
 
-    Pertanyaan Pasien:
+    === PERTANYAAN PASIEN ===
     {query}
-
-    Instruksi:
-    - Ambil inti jawaban dari informasi yang tersedia.
-    - Abaikan kata sapaan seperti "halo dok", "alodokter", atau kalimat tidak penting lainnya.
-    - Gunakan bahasa formal, rapi, dan mudah dipahami seperti tulisan informatif.
-    - Jangan menggunakan simbol markdown seperti *, **, atau tanda bullet (-).
-    - Jika perlu membuat daftar, gunakan format kalimat bernomor (1., 2., 3.).
-    - Tulis jawaban dengan struktur yang jelas dan enak dibaca.
-
-    Jawaban:
     """
 
+    return [
+        ("system", SYSTEM_PROMPT),
+        ("human", human_prompt)
+    ]
 
 def run_rag(query: str, penyakit: str, dataset_dir: str):
     chroma_path = f"{dataset_dir}/chroma"
@@ -45,16 +67,23 @@ def run_rag(query: str, penyakit: str, dataset_dir: str):
             return "Maaf, data tidak ditemukan."
 
         context = "\n\n---\n\n".join([
-            f"Pertanyaan: {d.page_content}\nJawaban: {d.metadata['answer']}"
+            f"""
+            Referensi Pertanyaan:
+            {d.page_content}
+
+            Referensi Jawaban:
+            {d.metadata['answer']}
+            """
             for d in docs
         ])
 
-        prompt = build_prompt(query, context)
+        messages = build_messages(query, context)
+        answer = invoke_llm(messages)
 
-        llm = get_llm()
-        answer = llm.invoke(prompt)
+        if hasattr(answer, "content"):
+            return answer.content
 
-        return answer
+        return str(answer)
 
     except Exception as e:
         print(f"[RAG ERROR] {e}")

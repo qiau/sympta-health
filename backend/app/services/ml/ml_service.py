@@ -29,14 +29,23 @@ def load_ml_model():
     print("Logistic Regression model loaded successfully!")
 
 
+# ========================
+# CONSTANT FEATURE
+# ========================
 MLB_FEATURES = ["diso", "anat", "chem", "drcn", "proc"]
 ORD_FEATURES = ["age", "frkw", "drtn"]
 
 
+# ========================
+# HELPER
+# ========================
 def normalize_keys(features: Dict[str, Any]) -> Dict[str, Any]:
     return {k.lower(): v for k, v in features.items()}
 
 
+# ========================
+# ENCODING
+# ========================
 def encode_features(features: Dict[str, Any]) -> np.ndarray:
     features = normalize_keys(features)
     mlb_arrays = []
@@ -88,11 +97,15 @@ def encode_features(features: Dict[str, Any]) -> np.ndarray:
     return X
 
 
+# ========================
+# PREDICT
+# ========================
 def predict_disease(
     features: Dict[str, Any],
     top_k: int = 3
 ) -> Tuple[str, float, List[Dict[str, float]]]:
 
+    # 🔥 SAFETY CHECK
     if model is None:
         raise Exception("Model LR belum di-load. Pastikan load_ml_model() dipanggil saat startup.")
 

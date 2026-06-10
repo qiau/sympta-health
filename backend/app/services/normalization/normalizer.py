@@ -1,7 +1,6 @@
 import json
 import os
 from typing import Dict, List, Optional
-from collections import defaultdict
 
 from .utils.frkw_parser import parse_frequency_to_category
 from .utils.age_parser import parse_age_to_category
@@ -78,20 +77,6 @@ class MedicalNormalizer:
                 dictionaries[field] = self._invert_dictionary(raw_dict)
 
         return dictionaries
-    
-    def group_entities(self,entities: list) -> dict:
-        grouped = defaultdict(list)
-
-        for ent in entities:
-            label = ent["label"].upper()
-            text = ent["text"]
-
-            if label in self.SINGLE_LABEL_FIELDS:
-                grouped[label] = text
-            else:
-                grouped[label].append(text)
-
-        return dict(grouped)
 
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 _DEFAULT_DICT_DIR = os.path.join(_BASE_DIR, "dictionaries")
@@ -99,5 +84,4 @@ _DEFAULT_DICT_DIR = os.path.join(_BASE_DIR, "dictionaries")
 _default_normalizer = MedicalNormalizer(_DEFAULT_DICT_DIR)
 
 def normalize_extraction(ner_output: Dict) -> Dict:
-    grouped = _default_normalizer.group_entities(ner_output)
-    return _default_normalizer.normalize(grouped)
+    return _default_normalizer.normalize(ner_output)

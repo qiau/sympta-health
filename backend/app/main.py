@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,13 +9,7 @@ from app.core.config import settings
 from app.api.router import api_router
 from app.db.session import SessionLocal
 from app.db.models.dataset import Dataset
-from app.services.ner.ner_service import load_ner_models
 from app.services.ml.ml_service import load_ml_model
-
-app = FastAPI(
-    title="Backend Final Project",
-    version="1.0.0",
-)
     
 os.makedirs(settings.STORAGE_DIR, exist_ok=True)
 
@@ -51,11 +46,18 @@ def cleanup_orphan_datasets():
     finally:
         db.close()
 
-@app.on_event("startup")
-def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     cleanup_orphan_datasets()
-    load_ner_models()
     load_ml_model()
+    
+    yield
+    
+app = FastAPI(
+    title="Backend Final Project",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 app.add_middleware(
     CORSMiddleware,

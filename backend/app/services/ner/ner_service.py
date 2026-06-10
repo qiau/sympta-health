@@ -1,97 +1,160 @@
-from concurrent.futures import ThreadPoolExecutor
-from flair.models import SequenceTagger
-from flair.data import Sentence
-from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
-import re
-from pathlib import Path
+from typing import Dict, Any
+import json
 
-NER_DIR = Path(__file__).resolve().parents[4] / "machine-learning" / "ner_models"
+from langchain_openai import ChatOpenAI
+from app.core.config import settings
 
-executor = ThreadPoolExecutor(max_workers=8)
+API_KEYS = [
+    key.strip()
+    for key in settings.NVIDIA_API_KEYS.split(",")
+]
 
-factory = StemmerFactory()
-stemmer = factory.create_stemmer()
+def get_llm(api_key: str):
 
-model_anat = None
-model_proc = None
-model_age = None
-model_diso = None
-model_chem = None
-model_drtn = None
-model_frkw = None
-model_drcn = None
+    return ChatOpenAI(
+        model=settings.EXTRACTION_MODEL,
+        api_key=api_key,
+        base_url="https://integrate.api.nvidia.com/v1",
+        temperature=0,
+        max_tokens=300
+    )
 
-def load_ner_models():
-    global model_anat, model_proc, model_age, model_diso, model_chem, model_drtn, model_frkw, model_drcn
+DEFAULT_OUTPUT = {
+    "DISO": [],
+    "ANAT": [],
+    "CHEM": [],
+    "AGE": None,
+    "FRKW": None,
+    "DRCN": [],
+    "PROC": [],
+    "DRTN": None
+}
 
-    print("Loading ANAT model...")
-    model_anat = SequenceTagger.load(NER_DIR / "anat" / "final-model.pt")
+SYSTEM_PROMPT = """
+Kamu adalah sistem Named Entity Recognition (NER) dari teks keluhan pasien medis.
 
-    print("Loading PROC model...")
-    model_proc = SequenceTagger.load(NER_DIR / "proc" / "final-model.pt")
+TUGAS UTAMA:
+Ekstrak entitas dari teks keluhan pengguna ke dalam TEPAT 8 fitur berikut:
+1. DISO = keluhan atau gejala inti yang dirasakan pasien (bukan nama penyakit/diagnosis).
+2. ANAT = bagian tubuh atau organ yang menjadi lokasi utama keluhan. (misalnya kaki, kepala, tangan)
+3. CHEM = kelas obat atau zat aktif yang disebutkan secara eksplisit.
+4. AGE  = kelompok umur pasien berdasarkan informasi usia atau konteks yang jelas.
+5. FRKW = seberapa sering keluhan terjadi (misalnya sering, kadang, setiap hari).
+6. DRCN = arah, sisi, atau lateralitas keluhan jika disebutkan (misalnya kiri, kanan, atas).
+7. PROC = tindakan medis non-obat yang dilakukan atau disarankan (pemeriksaan, tes, prosedur).
+8. DRTN = lamanya keluhan berlangsung berdasarkan durasi waktu yang jelas.
 
-    print("Loading AGE model...")
-    model_age = SequenceTagger.load(NER_DIR / "age" / "final-model.pt")
+ATURAN WAJIB (STRICT):
+- HANYA gunakan 8 fitur di atas, jangan menambah atau mengurangi.
+- Setiap kata atau frasa HANYA BOLEH muncul di SATU fitur.
+- TIDAK BOLEH ada duplikasi kata atau frasa antar fitur.
+- Jika satu frasa bisa masuk ke lebih dari satu fitur, pilih fitur PALING RELEVAN.
+- Jangan memecah satu frasa ke beberapa fitur.
+- Jangan mengarang informasi yang tidak tertulis di teks.
+- Jangan melakukan normalisasi, koreksi ejaan, atau penyamaan istilah.
+- Jika tidak ada entitas untuk suatu fitur, kembalikan nilai kosong sesuai tipe.
 
-    print("Loading DISO model...")
-    model_diso = SequenceTagger.load(NER_DIR / "diso" / "final-model.pt")
-    
-    print("Loading CHEM model...")
-    model_chem = SequenceTagger.load(NER_DIR / "chem" / "final-model.pt")
+- Untuk fitur AGE, FRKW, dan DRTN, HANYA boleh mengembalikan SATU nilai.
+- Jika terdapat lebih dari satu kandidat dalam teks:
+  - Pilih nilai yang PALING RELEVAN dengan kondisi keluhan saat ini.
+  - Abaikan kandidat lainnya.
 
-    print("Loading DRTN model...")
-    model_drtn = SequenceTagger.load(NER_DIR / "drtn" / "final-model.pt")
+ATURAN FORMAT OUTPUT:
+- Output HARUS berupa JSON VALID.
+- Tanpa Markdown, tanpa backticks, tanpa penjelasan tambahan.
+- Struktur JSON HARUS PERSIS seperti berikut.
 
-    print("Loading FRKW model...")
-    model_frkw = SequenceTagger.load(NER_DIR / "frkw" / "final-model.pt")
+FORMAT OUTPUT JSON:
+{
+  "DISO": [],
+  "ANAT": [],
+  "CHEM": [],
+  "AGE": null,
+  "FRKW": null,
+  "DRCN": [],
+  "PROC": [],
+  "DRTN": null
+}
+""".strip()
 
-    print("Loading DRCN model...")
-    model_drcn = SequenceTagger.load(NER_DIR / "drcn" / "final-model.pt")
+def _extract_json(raw_text: str) -> dict:
 
-    print("All NER models loaded successfully!")
+    raw = raw_text.strip()
 
-def normalize_text_light(text: str) -> str:
-    text = text.strip()
-    text = re.sub(r"\s+", " ", text)
-    return text
+    try:
+        return json.loads(raw)
+
+    except json.JSONDecodeError:
+        pass
+
+    if "```" in raw:
+
+        parts = raw.split("```")
+
+        for part in parts:
+
+            part = part.strip()
+
+            if part.startswith("{") and part.endswith("}"):
+
+                try:
+                    return json.loads(part)
+
+                except json.JSONDecodeError:
+                    continue
+
+    start = raw.find("{")
+    end = raw.rfind("}")
+
+    if start != -1 and end != -1 and end > start:
+
+        candidate = raw[start:end + 1]
+
+        try:
+            return json.loads(candidate)
+
+        except json.JSONDecodeError:
+            pass
+
+    return DEFAULT_OUTPUT.copy()
 
 
-def stem_indonesian(text: str) -> str:
-    return stemmer.stem(text)
+def extract_features(teks_keluhan: str) -> Dict[str, Any]:
 
+    last_error = None
 
-def run_model(model, text: str) -> Sentence:
-    sentence = Sentence(text)
-    model.predict(sentence)
-    return sentence
+    for api_key in API_KEYS:
 
-def extract_features(text: str):
-    text = normalize_text_light(text)
+        try:
 
-    futures = [
-        executor.submit(run_model, model_anat, text),
-        executor.submit(run_model, model_proc, text),
-        executor.submit(run_model, model_age, text),
-        executor.submit(run_model, model_diso, text),
-        executor.submit(run_model, model_chem, text),
-        executor.submit(run_model, model_drtn, text),
-        executor.submit(run_model, model_frkw, text),
-        executor.submit(run_model, model_drcn, text),
-    ]
+            llm = get_llm(api_key)
 
-    merged = []
+            response = llm.invoke([
+                ("system", SYSTEM_PROMPT),
+                ("human", f"Teks keluhan pasien:\n{teks_keluhan}")
+            ])
 
-    for future in futures:
-        sentence = future.result()
-        for ent in sentence.get_spans("ner"):
-            merged.append({
-                "text": ent.text,
-                "label": ent.tag,
-                "start_pos": ent.start_position,
-                "end_pos": ent.end_position,
-                "stem": stem_indonesian(ent.text),
-            })
+            raw_text = response.content
 
-    merged = sorted(merged, key=lambda x: x["start_pos"])
+            data = _extract_json(raw_text)
 
-    return merged
+            return {
+                "DISO": data.get("DISO", []),
+                "ANAT": data.get("ANAT", []),
+                "CHEM": data.get("CHEM", []),
+                "AGE": data.get("AGE"),
+                "FRKW": data.get("FRKW"),
+                "DRCN": data.get("DRCN", []),
+                "PROC": data.get("PROC", []),
+                "DRTN": data.get("DRTN"),
+            }
+
+        except Exception as e:
+
+            print(f"[NER API ERROR] API key gagal: {e}")
+
+            last_error = e
+
+    print(f"[NER API ERROR] Semua API key gagal: {last_error}")
+
+    return DEFAULT_OUTPUT.copy()

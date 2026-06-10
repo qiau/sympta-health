@@ -2,7 +2,7 @@ import re
 from typing import Optional
 
 AGE_MONTH_UNITS = {"bulan", "buln", "bln", "bl", "b"}
-AGE_YEAR_UNITS = {"tahun", "taun", "tahn", "thun", "thn", "th", "t"}
+AGE_YEAR_UNITS = {"tahun", "taun", "tahn", "thun", "thn", "th", "t", ""}
 
 MONTH_PATTERN = "|".join(AGE_MONTH_UNITS)
 YEAR_PATTERN = "|".join(AGE_YEAR_UNITS)
