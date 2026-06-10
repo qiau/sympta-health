@@ -11,7 +11,6 @@ export default function HistoryDetailPage() {
   const [keluhan, setKeluhan] = useState("");
   const [diagnosa, setDiagnosa] = useState("");
   const [topPredictions, setTopPredictions] = useState<PredictionItem[]>([]);
-  const [confidenceScore, setConfidenceScore] = useState<number | null>(null);
   const [rekomendasi, setRekomendasi] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [loading, setLoading] = useState(true);
@@ -38,7 +37,6 @@ export default function HistoryDetailPage() {
         setKeluhan(res.teks_keluhan);
         setDiagnosa(res.prediksi_penyakit ?? "");
         setTopPredictions(res.top_predictions ?? []);
-        setConfidenceScore(res.confidence_score ?? null);
         setRekomendasi(res.rekomendasi_tindakan ?? "");
 
         const createdDate = new Date(res.created_at);
