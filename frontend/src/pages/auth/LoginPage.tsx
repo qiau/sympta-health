@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginForm } from "../../schemas/auth.schema";
 
+// LoginPage
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login: loginApi } = useAuth();
