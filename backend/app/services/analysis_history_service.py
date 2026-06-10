@@ -1,13 +1,8 @@
-import json
 from sqlalchemy.orm import Session
 
 from app.db.models.analysis_history import AnalysisHistory, AnalysisStatus
+from app.services.llm.analyzer import analyze_patient_complaint
 from app.db.models.user import User
-from app.services.ner.ner_service import extract_features
-from app.services.normalization.normalizer import normalize_extraction
-from app.services.ml.ml_service import predict_disease
-from app.services.rag.pipeline import run_rag
-from app.services.dataset_service import get_dataset_active
 from app.schemas.analysis_history import AnalysisHistoryIn
 
 def create_analysis_history(
@@ -30,44 +25,13 @@ def create_analysis_history(
         print("📝 TEKS ASLI:")
         print(data.teks_keluhan)
 
-        extraction = extract_features(data.teks_keluhan)
-        print("\n🔍 HASIL EKSTRAKSI (NER):")
-        print(extraction)
-        
-        normalized = normalize_extraction(extraction)
-        print("\n🧹 HASIL NORMALISASI:")
-        print(normalized)
-        
-        disease, confidence_score, top_predictions = predict_disease(normalized)
-        print("\n🧠 PREDIKSI PENYAKIT:")
-        print(disease, confidence_score)
+        result = analyze_patient_complaint(data.teks_keluhan)
 
-        dataset = get_dataset_active(db)
-
-        if not dataset:
-            raise Exception("Dataset sumber tidak ditemukan")
-
-        dataset_dir = dataset.dataset_dir
-
-        if confidence_score >= 0.1:
-            recommendation = run_rag(
-                query=data.teks_keluhan,
-                penyakit=disease,
-                dataset_dir=dataset_dir
-            )
-
-        else:
-            disease = "Tidak Diketahui"
-            recommendation = (
-                "Tingkat keyakinan prediksi rendah. "
-                "Silakan konsultasikan dengan tenaga medis profesional untuk diagnosis yang akurat."
-            )
-
-        record.hasil_ekstraksi = json.dumps(extraction)
-        record.prediksi_penyakit = disease
-        record.top_predictions = top_predictions
-        record.confidence_score = confidence_score
-        record.rekomendasi_tindakan = recommendation
+        record.hasil_ekstraksi = None
+        record.prediksi_penyakit = result["disease"]
+        record.top_predictions = result["top_predictions"]
+        record.confidence_score = result["confidence_score"]
+        record.rekomendasi_tindakan = result["recommendation"]
         
         record.status = AnalysisStatus.success
         record.error_message = None

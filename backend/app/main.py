@@ -9,7 +9,6 @@ from app.core.config import settings
 from app.api.router import api_router
 from app.db.session import SessionLocal
 from app.db.models.dataset import Dataset
-from app.services.ml.ml_service import load_ml_model
     
 os.makedirs(settings.STORAGE_DIR, exist_ok=True)
 
@@ -49,7 +48,6 @@ def cleanup_orphan_datasets():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     cleanup_orphan_datasets()
-    load_ml_model()
     
     yield
     

@@ -1,7 +1,0 @@
-{
-  "bayi_balita": ["0 bulan", "4 tahun"],
-  "anak": ["5 tahun", "9 tahun"],
-  "remaja": ["10 tahun", "17 tahun"],
-  "dewasa": ["18 tahun", "59 tahun"],
-  "lansia": ["60 tahun", ">60 tahun"]
-}
