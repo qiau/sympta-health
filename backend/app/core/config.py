@@ -12,10 +12,7 @@ class Settings(BaseSettings):
     COOKIE_SECURE: bool
     COOKIE_SAMESITE: str
     BACKEND_CORS_ORIGINS: List[str] = []
-    STORAGE_DIR: str
-    EXTRACTION_MODEL: str
     LLM_MODEL:str
-    EMBEDDING_MODEL:str
 
     model_config = SettingsConfigDict(
         env_file=".env",
